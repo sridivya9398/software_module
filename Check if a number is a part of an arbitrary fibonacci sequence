@@ -1,0 +1,12 @@
+def is_fibo(a: int, b: int, f: int) -> bool:
+    # Initial terms of the sequence
+    current, next_term = a, b
+
+    # Continue until the current term exceeds f
+    while current <= f:
+        if current == f:
+            return True
+        # Move to the next term in the sequence
+        current, next_term = next_term, current + next_term
+    
+    return False
