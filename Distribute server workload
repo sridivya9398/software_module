@@ -1,0 +1,18 @@
+def distribute(nodes, workload):
+    # Initialize result list to store jobs for each server
+    result = []
+    current_job = 0
+
+    # Calculate base job count and the number of extra jobs to distribute
+    base_jobs = workload // nodes
+    extra_jobs = workload % nodes
+
+    for i in range(nodes):
+        # Calculate the number of jobs for the current server
+        jobs_for_node = base_jobs + 1 if i < extra_jobs else base_jobs
+        # Assign the jobs to this server and add to the result
+        result.append(list(range(current_job, current_job + jobs_for_node)))
+        # Update the current job counter
+        current_job += jobs_for_node
+
+    return result
