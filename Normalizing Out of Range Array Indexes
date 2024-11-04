@@ -1,0 +1,8 @@
+def norm_index_test(seq, ind): 
+    if not seq:
+        return None  # Return None for an empty sequence
+    
+    # Normalize index using modulo to loop around
+    normalized_index = ind % len(seq)
+    
+    return seq[normalized_index]
