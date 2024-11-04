@@ -1,0 +1,9 @@
+class List(object):
+    def count_spec_digits(self, integers_list, digits_list):
+        # Convert all integers to strings and join them to form a single string of digits
+        all_digits = ''.join(str(abs(num)) for num in integers_list)
+        
+        # For each digit in digits_list, count its occurrences in the joined string
+        result = [(digit, all_digits.count(str(digit))) for digit in digits_list]
+        
+        return result
