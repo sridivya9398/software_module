@@ -1,0 +1,18 @@
+def sort_array(source_array):
+    # Extract odd numbers and sort them
+    sorted_odds = sorted([num for num in source_array if num % 2 != 0])
+    
+    # Initialize an index for the sorted odd numbers
+    odd_index = 0
+    
+    # Replace odd numbers in the original positions with sorted ones
+    result = [
+        sorted_odds[odd_index] if num % 2 != 0 else num
+        for num in source_array
+    ]
+    for i, num in enumerate(result):
+        if num % 2 != 0:
+            result[i] = sorted_odds[odd_index]
+            odd_index += 1
+
+    return result
