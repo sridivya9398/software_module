@@ -1,0 +1,56 @@
+def fill(arr, method=0):
+    if not arr:
+        return arr
+
+    if method == -1:
+        # Backwards: replace None with closest integer to the right
+        result = []
+        last_seen = None
+        for i in range(len(arr) - 1, -1, -1):
+            if arr[i] is not None:
+                last_seen = arr[i]
+            result.append(last_seen if arr[i] is None else arr[i])
+        return result[::-1]
+
+    elif method == 1:
+        # Forwards: replace None with closest integer to the left
+        result = []
+        last_seen = None
+        for value in arr:
+            if value is not None:
+                last_seen = value
+            result.append(last_seen if value is None else value)
+        return result
+
+    elif method == 0:
+        # Nearest: replace None with the closest integer on either side
+        n = len(arr)
+        result = arr[:]
+        
+        for i in range(n):
+            if arr[i] is None:
+                left_dist, right_dist = float('inf'), float('inf')
+                left_val, right_val = None, None
+
+                # Find closest non-None integer on the left
+                for j in range(i - 1, -1, -1):
+                    if arr[j] is not None:
+                        left_dist = i - j
+                        left_val = arr[j]
+                        break
+
+                # Find closest non-None integer on the right
+                for j in range(i + 1, n):
+                    if arr[j] is not None:
+                        right_dist = j - i
+                        right_val = arr[j]
+                        break
+
+                # Choose the closer integer, or the smaller one if distances are equal
+                if left_dist < right_dist:
+                    result[i] = left_val
+                elif right_dist < left_dist:
+                    result[i] = right_val
+                else:
+                    result[i] = min(left_val, right_val) if left_val is not None and right_val is not None else left_val or right_val
+        return result
