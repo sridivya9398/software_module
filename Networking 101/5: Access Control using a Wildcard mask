@@ -1,0 +1,16 @@
+def match(net_addr: str, wc_mask: str, ipv4_addr: str) -> bool:
+    # Split and convert each part of the IP addresses and the wildcard mask to integers
+    net_octets = net_addr.split('.')
+    mask_octets = wc_mask.split('.')
+    ip_octets = ipv4_addr.split('.')
+    
+    # Compare each octet according to the wildcard mask
+    for i in range(4):
+        net_octet = int(net_octets[i])
+        mask_octet = int(mask_octets[i])
+        ip_octet = int(ip_octets[i])
+        
+        # Apply the mask: Bits in `mask_octet` that are 0 must match exactly in `net_octet` and `ip_octet`
+        if (net_octet & ~mask_octet) != (ip_octet & ~mask_octet):
+            return False
+    return True
