@@ -1,0 +1,32 @@
+def find_most_adjacent(grid):
+    N = len(grid)
+    visited = [[False] * N for _ in range(N)]
+
+    def dfs(x, y, value):
+        stack = [(x, y)]
+        visited[x][y] = True
+        size = 1
+        
+        while stack:
+            cx, cy = stack.pop()
+            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:  # check four directions
+                nx, ny = cx + dx, cy + dy
+                if 0 <= nx < N and 0 <= ny < N and not visited[nx][ny] and grid[nx][ny] == value:
+                    visited[nx][ny] = True
+                    stack.append((nx, ny))
+                    size += 1
+        return size
+
+    largest_value = None
+    largest_size = 0
+
+    for i in range(N):
+        for j in range(N):
+            if not visited[i][j]:
+                value = grid[i][j]
+                group_size = dfs(i, j, value)
+                if group_size > largest_size or (group_size == largest_size and (largest_value is None or value < largest_value)):
+                    largest_value = value
+                    largest_size = group_size
+
+    return (largest_value, largest_size)
